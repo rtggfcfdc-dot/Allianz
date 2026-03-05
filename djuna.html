@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirmación de Seguro de Vida – Francisco Javier Ramos Mota</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --oro: #C8A951;
+      --oro-claro: #E8CC7A;
+      --oro-oscuro: #9A7A28;
+      --fondo: #080B12;
+      --fondo2: #0F1320;
+      --fondo3: #161C2E;
+      --texto: #EDE9E0;
+      --muted: #7A7F90;
+      --verde: #27AE60;
+      --verde-bg: rgba(39,174,96,0.08);
+      --verde-borde: rgba(39,174,96,0.35);
+      --rojo-bg: rgba(231,76,60,0.08);
+      --rojo-borde: rgba(231,76,60,0.4);
+      --rojo: #E74C3C;
+      --azul: #2980B9;
+    }
+
+```
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Mesh background */
+.bg-mesh {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 10%, rgba(200,169,81,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 90% 80%, rgba(39,174,96,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(41,128,185,0.04) 0%, transparent 60%);
+}
+
+/* Noise overlay */
+.bg-mesh::after {
+  content:'';
+  position:absolute; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+.wrapper {
+  position: relative; z-index: 1;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(20px, 5vw, 48px) clamp(16px, 4vw, 32px) 80px;
+}
+
+/* ── HEADER ── */
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(200,169,81,0.2);
+  margin-bottom: 40px;
+  opacity:0; animation: subirFade 0.7s 0.05s ease forwards;
+}
+.logo-bloque { display:flex; align-items:center; gap:14px; }
+.logo-icono {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--oro), var(--oro-claro));
+  border-radius: 14px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 20px rgba(200,169,81,0.3);
+  flex-shrink: 0;
+}
+.logo-texto { line-height: 1.3; }
+.logo-nombre {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+  color: var(--oro);
+  letter-spacing: 0.04em;
+}
+.logo-slogan { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.doc-meta { text-align: right; font-size: 0.75rem; color: var(--muted); line-height: 1.7; }
+.doc-meta strong { color: var(--oro-claro); font-size: 0.85rem; display:block; }
+
+/* ── HERO STATUS ── */
+.hero {
+  text-align: center;
+  margin-bottom: 44px;
+  opacity:0; animation: popIn 0.65s 0.25s ease forwards;
+}
+.badge-estado {
+  display: inline-flex; align-items:center; gap:9px;
+  background: var(--verde-bg);
+  border: 1.5px solid var(--verde-borde);
+  border-radius: 999px;
+  padding: 9px 26px;
+  font-size: 0.78rem;
+  color: var(--verde);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+.punto-vivo {
+  width: 9px; height: 9px;
+  background: var(--verde);
+  border-radius: 50%;
+  animation: pulso 1.6s ease-in-out infinite;
+}
+@keyframes pulso {
+  0%,100%{ box-shadow:0 0 0 0 rgba(39,174,96,0.6);}
+  50%{ box-shadow:0 0 0 7px rgba(39,174,96,0);}
+}
+.titulo-principal {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--oro-claro) 0%, var(--oro) 55%, var(--oro-oscuro) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+.subtitulo { font-size: clamp(0.85rem, 2vw, 1rem); color: var(--muted); font-weight: 300; }
+
+/* ── SEPARADOR ── */
+.sep {
+  display:flex; align-items:center; gap:14px;
+  margin: 32px 0;
+  opacity:0; animation: subirFade 0.5s 0.5s ease forwards;
+}
+.sep::before,.sep::after {
+  content:''; flex:1; height:1px;
+  background: linear-gradient(to right, transparent, rgba(200,169,81,0.3), transparent);
+}
+.sep-sym { color: var(--oro); font-size: 0.7rem; letter-spacing:5px; }
+
+/* ── SECCIÓN ── */
+.seccion-titulo {
+  display: flex; align-items:center; gap:10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  color: var(--oro-claro);
+  margin-bottom: 18px;
+  opacity:0;
+}
+.seccion-titulo i { font-size: 1.1rem; color: var(--oro); }
+
+/* ── GRID DATOS ── */
+.grid-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.tarjeta {
+  background: var(--fondo2);
+  border: 1px solid rgba(200,169,81,0.12);
+  border-radius: 14px;
+  padding: clamp(16px,3vw,22px) clamp(16px,3vw,22px);
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  opacity:0;
+}
+.tarjeta:hover {
+  border-color: rgba(200,169,81,0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(200,169,81,0.08);
+}
+.tarjeta::before {
+  content:'';
+  position:absolute; top:0; left:0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+  border-radius: 3px 0 0 3px;
+}
+.tarjeta.full { grid-column: 1/-1; }
+.tarjeta.destaque {
+  background: linear-gradient(135deg, rgba(200,169,81,0.1), rgba(200,169,81,0.03));
+  border-color: rgba(200,169,81,0.35);
+}
+.tarjeta-icono {
+  width: 38px; height: 38px;
+  background: rgba(200,169,81,0.12);
+  border-radius: 10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 1rem; color: var(--oro);
+  margin-bottom: 12px;
+}
+.tarjeta-etiq {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.tarjeta-val {
+  font-size: clamp(0.9rem,2vw,1.05rem);
+  font-weight: 400;
+  color: var(--texto);
+  word-break: break-word;
+}
+.tarjeta-val.grande {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem,5vw,2.6rem);
+  font-weight: 700;
+  color: var(--oro-claro);
+  line-height: 1;
+}
+
+/* ── PASOS ── */
+.lista-pasos { display:flex; flex-direction:column; gap:12px; }
+.paso {
+  display:flex; align-items:flex-start; gap:14px;
+  background: var(--fondo2);
+  border: 1px solid rgba(200,169,81,0.1);
+  border-radius: 13px;
+  padding: clamp(14px,3vw,18px) clamp(14px,3vw,20px);
+  transition: border-color 0.3s, transform 0.3s;
+  opacity:0;
+}
+.paso:hover { border-color: rgba(200,169,81,0.3); transform:translateX(4px); }
+.paso-num {
+  min-width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--oro), var(--oro-oscuro));
+  border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 0.82rem; font-weight: 700; color: var(--fondo);
+  flex-shrink:0; margin-top:2px;
+}
+.paso-cuerpo { flex:1; }
+.paso-titulo { font-size: clamp(0.88rem,2vw,0.96rem); font-weight:600; color: var(--texto); margin-bottom:4px; }
+.paso-desc { font-size: clamp(0.78rem,1.8vw,0.87rem); color: var(--muted); line-height:1.55; }
+.paso-check { color: var(--verde); font-size: 1.15rem; flex-shrink:0; margin-top:4px; }
+
+/* ── AVISO REEMBOLSO ── */
+.aviso-reembolso {
+  background: linear-gradient(135deg, rgba(231,76,60,0.06), rgba(200,169,81,0.05));
+  border: 2px solid var(--rojo-borde);
+  border-radius: 18px;
+  padding: clamp(22px,4vw,32px);
+  margin-top: 12px;
+  opacity:0;
+}
+.aviso-header {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.aviso-icono-wrap {
+  width: 52px; height: 52px;
+  background: rgba(231,76,60,0.12);
+  border-radius: 14px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 1.5rem; color: var(--rojo);
+  flex-shrink:0;
+}
+.aviso-encabezado h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem,3vw,1.45rem);
+  color: #f0a898;
+  margin-bottom: 2px;
+}
+.aviso-encabezado p { font-size: 0.78rem; color: var(--muted); }
+.monto-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background: rgba(231,76,60,0.12);
+  border: 1.5px solid var(--rojo-borde);
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: clamp(1.4rem,4vw,2rem);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  color: #f0a898;
+  margin-bottom: 20px;
+}
+.monto-tag i { font-size: 1.1rem; }
+.aviso-puntos { display:flex; flex-direction:column; gap:10px; }
+.aviso-punto {
+  display:flex; align-items:flex-start; gap:12px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px; padding: 13px 15px;
+  border: 1px solid rgba(231,76,60,0.15);
+}
+.aviso-punto i { color: var(--rojo); font-size: 0.9rem; margin-top:3px; flex-shrink:0; }
+.aviso-punto span { font-size: clamp(0.8rem,2vw,0.9rem); color: var(--texto); line-height:1.55; }
+.aviso-punto strong { color: #f0a898; }
+
+/* ── CONFIRMACIÓN FINAL ── */
+.caja-final {
+  margin-top: 36px;
+  background: var(--verde-bg);
+  border: 2px solid var(--verde-borde);
+  border-radius: 18px;
+  padding: clamp(24px,4vw,36px);
+  text-align: center;
+  opacity:0;
+}
+.icono-final { font-size: clamp(2rem,6vw,3.2rem); margin-bottom: 14px; color: var(--verde); }
+.final-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.4rem,4vw,2rem);
+  color: #6ee09a;
+  margin-bottom: 12px;
+}
+.final-texto {
+  font-size: clamp(0.83rem,2vw,0.95rem);
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 520px; margin: 0 auto 20px;
+}
+.final-texto strong { color: var(--texto); }
+.chips {
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+}
+.chip {
+  display:inline-flex; align-items:center; gap:7px;
+  background: rgba(39,174,96,0.1);
+  border: 1px solid rgba(39,174,96,0.25);
+  border-radius: 999px; padding: 7px 16px;
+  font-size: 0.78rem; color: #6ee09a; font-weight:500;
+}
+
+/* ── FOOTER ── */
+.pie {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(200,169,81,0.12);
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 2;
+  opacity:0;
+}
+.pie a { color: var(--oro); text-decoration:none; }
+
+/* ── ANIMATIONS ── */
+@keyframes subirFade { from{opacity:0;transform:translateY(18px);}  to{opacity:1;transform:translateY(0);} }
+@keyframes popIn     { from{opacity:0;transform:scale(0.92);} to{opacity:1;transform:scale(1);} }
+@keyframes izqFade   { from{opacity:0;transform:translateX(-18px);} to{opacity:1;transform:translateX(0);} }
+
+/* Staggered via JS */
+```
+
+  </style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="wrapper">
+
+  <!-- CABECERA -->
+
+  <header class="cabecera">
+    <div class="logo-bloque">
+      <div class="logo-icono"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="logo-texto">
+        <div class="logo-nombre">SecureVida Seguros</div>
+        <div class="logo-slogan">Protección &amp; Garantías Internacionales</div>
+      </div>
+    </div>
+    <div class="doc-meta">
+      <strong><i class="fa-solid fa-file-contract" style="margin-right:5px"></i>Ref.: SVA-2026-03892</strong>
+      <span><i class="fa-regular fa-calendar" style="margin-right:4px"></i>05 de marzo de 2026</span><br>
+      <span><i class="fa-solid fa-location-dot" style="margin-right:4px"></i>Aguascalientes, México</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+
+  <section class="hero">
+    <div class="badge-estado">
+      <div class="punto-vivo"></div>
+      <i class="fa-solid fa-circle-check"></i>
+      Expediente Aprobado y Confirmado
+    </div>
+    <div class="titulo-principal">Confirmación de Seguro de Vida</div>
+    <div class="subtitulo">Todos los criterios de validación han sido satisfechos exitosamente</div>
+  </section>
+
+  <!-- SEP -->
+
+  <div class="sep"><span class="sep-sym">◆ ◆ ◆</span></div>
+
+  <!-- DATOS DEL TITULAR -->
+
+  <div class="seccion-titulo" id="st1">
+    <i class="fa-solid fa-id-card"></i> Datos del Titular del Contrato
+  </div>
+  <div class="grid-datos">
+    <div class="tarjeta">
+      <div class="tarjeta-icono"><i class="fa-solid fa-user"></i></div>
+      <div class="tarjeta-etiq">Titular del Contrato</div>
+      <div class="tarjeta-val">Francisco Javier Ramos Mota</div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono"><i class="fa-regular fa-calendar-days"></i></div>
+      <div class="tarjeta-etiq">Fecha de Nacimiento</div>
+      <div class="tarjeta-val">18 de marzo de 1985</div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono"><i class="fa-solid fa-map-location-dot"></i></div>
+      <div class="tarjeta-etiq">Ciudad de Residencia</div>
+      <div class="tarjeta-val">Aguascalientes, México</div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono"><i class="fa-solid fa-car"></i></div>
+      <div class="tarjeta-etiq">Objeto del Financiamiento</div>
+      <div class="tarjeta-val">Financiamiento de Vehículo</div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono"><i class="fa-solid fa-phone"></i></div>
+      <div class="tarjeta-etiq">Teléfono de Contacto</div>
+      <div class="tarjeta-val">+52 449 368 3835</div>
+    </div>
+    <div class="tarjeta">
+      <div class="tarjeta-icono"><i class="fa-solid fa-envelope"></i></div>
+      <div class="tarjeta-etiq">Correo Electrónico</div>
+      <div class="tarjeta-val">Panchito.ramos@icloud.com</div>
+    </div>
+    <div class="tarjeta full destaque">
+      <div class="tarjeta-icono"><i class="fa-solid fa-sack-dollar"></i></div>
+      <div class="tarjeta-etiq">Monto Asegurado – Cobertura de Vida</div>
+      <div class="tarjeta-val grande">12,000 USD</div>
+    </div>
+  </div>
+
+  <!-- SEP -->
+
+  <div class="sep" style="animation-delay:0.8s"><span class="sep-sym">◆ ◆ ◆</span></div>
+
+  <!-- ETAPAS DE VALIDACIÓN -->
+
+  <div class="seccion-titulo" id="st2">
+    <i class="fa-solid fa-list-check"></i> Etapas de Validación – Todas Finalizadas
+  </div>
+  <div class="lista-pasos" id="pasos">
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <div class="paso-cuerpo">
+        <div class="paso-titulo"><i class="fa-solid fa-fingerprint" style="color:var(--oro);margin-right:7px"></i>Verificación de Identidad</div>
+        <div class="paso-desc">Los datos personales del titular fueron verificados y autenticados satisfactoriamente por nuestros sistemas de seguridad.</div>
+      </div>
+      <i class="fa-solid fa-circle-check paso-check"></i>
+    </div>
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <div class="paso-cuerpo">
+        <div class="paso-titulo"><i class="fa-solid fa-folder-open" style="color:var(--oro);margin-right:7px"></i>Análisis del Expediente de Financiamiento</div>
+        <div class="paso-desc">El expediente relativo al financiamiento del vehículo fue examinado y aceptado por nuestro equipo especializado.</div>
+      </div>
+      <i class="fa-solid fa-circle-check paso-check"></i>
+    </div>
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <div class="paso-cuerpo">
+        <div class="paso-titulo"><i class="fa-solid fa-scale-balanced" style="color:var(--oro);margin-right:7px"></i>Evaluación y Aprobación del Monto</div>
+        <div class="paso-desc">La cobertura de vida por un monto de <strong>12,000 USD</strong> fue aprobada y registrada en nuestra plataforma.</div>
+      </div>
+      <i class="fa-solid fa-circle-check paso-check"></i>
+    </div>
+    <div class="paso">
+      <div class="paso-num">4</div>
+      <div class="paso-cuerpo">
+        <div class="paso-titulo"><i class="fa-solid fa-lock" style="color:var(--oro);margin-right:7px"></i>Aseguramiento del Contrato</div>
+        <div class="paso-desc">Todas las medidas de seguridad han sido aplicadas. El contrato está activo y protegido bajo los protocolos internacionales vigentes.</div>
+      </div>
+      <i class="fa-solid fa-circle-check paso-check"></i>
+    </div>
+    <div class="paso">
+      <div class="paso-num">5</div>
+      <div class="paso-cuerpo">
+        <div class="paso-titulo"><i class="fa-solid fa-stamp" style="color:var(--oro);margin-right:7px"></i>Confirmación Oficial</div>
+        <div class="paso-desc">El presente documento constituye la confirmación definitiva y oficial de su seguro de vida con plena vigencia jurídica.</div>
+      </div>
+      <i class="fa-solid fa-circle-check paso-check"></i>
+    </div>
+  </div>
+
+  <!-- SEP -->
+
+  <div class="sep" style="animation-delay:1.2s"><span class="sep-sym">◆ ◆ ◆</span></div>
+
+  <!-- AVISO DE GASTOS DE REEMBOLSO -->
+
+  <div class="seccion-titulo" id="st3">
+    <i class="fa-solid fa-triangle-exclamation"></i> Gastos de Reembolso Obligatorios
+  </div>
+  <div class="aviso-reembolso" id="avReembolso">
+    <div class="aviso-header">
+      <div class="aviso-icono-wrap"><i class="fa-solid fa-peso-sign"></i></div>
+      <div class="aviso-encabezado">
+        <h3>Cuota Única de Reembolso Administrativo</h3>
+        <p>Pago obligatorio para la liberación de su cobertura asegurada</p>
+      </div>
+    </div>
+
+```
+<div class="monto-tag">
+  <i class="fa-solid fa-peso-sign"></i>
+  550 Pesos Mexicanos (MXN)
+</div>
+
+<div class="aviso-puntos">
+  <div class="aviso-punto">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <span>Los <strong>gastos de reembolso ascienden únicamente a $550 pesos mexicanos</strong>, monto fijo e indivisible que deberá cubrirse para activar la liberación total de su seguro de vida.</span>
+  </div>
+  <div class="aviso-punto">
+    <i class="fa-solid fa-clock"></i>
+    <span>Este pago es <strong>obligatorio y urgente</strong>. Sin la confirmación de pago, la transferencia de su cobertura de <strong>12,000 USD</strong> quedará en suspenso hasta nuevo aviso.</span>
+  </div>
+  <div class="aviso-punto">
+    <i class="fa-solid fa-shield-halved"></i>
+    <span>El monto de <strong>$550 MXN corresponde exclusivamente a gastos administrativos</strong> de tramitación, certificación y notaría requeridos por la normativa internacional de seguros.</span>
+  </div>
+  <div class="aviso-punto">
+    <i class="fa-solid fa-envelope-open-text"></i>
+    <span>Una vez realizado el pago, envíe su comprobante al correo <strong>Panchito.ramos@icloud.com</strong> o comuníquese al número <strong>449 368 3835</strong> para proceder con la liberación inmediata.</span>
+  </div>
+  <div class="aviso-punto">
+    <i class="fa-solid fa-file-invoice-dollar"></i>
+    <span>Se emitirá un <strong>recibo oficial de comprobación</strong> una vez procesado el pago. Conserve este documento como respaldo ante cualquier gestión futura.</span>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- SEP -->
+
+  <div class="sep" style="animation-delay:1.6s"><span class="sep-sym">◆ ◆ ◆</span></div>
+
+  <!-- CONFIRMACIÓN FINAL -->
+
+  <div class="caja-final" id="cajaFinal">
+    <div class="icono-final"><i class="fa-solid fa-shield-heart"></i></div>
+    <div class="final-titulo">¡Felicidades, Sr. Ramos Mota!</div>
+    <div class="final-texto">
+      Su seguro de vida por <strong>12,000 USD</strong> está <strong>plenamente confirmado y activo</strong>.
+      Todas las etapas han sido finalizadas con éxito. Recibirá una copia de este documento en
+      <strong>Panchito.ramos@icloud.com</strong> y una notificación en su teléfono
+      <strong>(449) 368-3835</strong>. Recuerde que únicamente resta cubrir los gastos de reembolso de
+      <strong>$550 MXN</strong> para la liberación definitiva del monto asegurado.
+    </div>
+    <div class="chips">
+      <span class="chip"><i class="fa-solid fa-check"></i> Identidad Verificada</span>
+      <span class="chip"><i class="fa-solid fa-check"></i> Contrato Activo</span>
+      <span class="chip"><i class="fa-solid fa-check"></i> Cobertura Confirmada</span>
+      <span class="chip"><i class="fa-solid fa-check"></i> 12,000 USD Asegurados</span>
+    </div>
+  </div>
+
+  <!-- PIE -->
+
+  <footer class="pie" id="pie">
+    <p><i class="fa-solid fa-shield-halved" style="color:var(--oro);margin-right:5px"></i><strong style="color:var(--oro)">SecureVida Seguros Internacionales S.A. de C.V.</strong></p>
+    <p>Este documento es oficial y constituye prueba legal de su cobertura.</p>
+    <p>Ref. SVA-2026-03892 &nbsp;·&nbsp; Emitido el 05 de marzo de 2026 &nbsp;·&nbsp; Todas las garantías incluidas</p>
+    <p style="margin-top:8px;font-size:0.68rem">
+      <i class="fa-solid fa-phone" style="margin-right:4px"></i>449 368 3835 &nbsp;|&nbsp;
+      <i class="fa-solid fa-envelope" style="margin-right:4px"></i>Panchito.ramos@icloud.com
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  // Intersection Observer for scroll-triggered animations
+  const opts = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = `subirFade 0.55s ease forwards`;
+        observer.unobserve(e.target);
+      }
+    });
+  }, opts);
+
+  // Section titles
+  ['st1','st2','st3'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) observer.observe(el);
+  });
+
+  // Cards staggered
+  document.querySelectorAll('.tarjeta').forEach((el, i) => {
+    el.style.animationDelay = `${0.55 + i * 0.1}s`;
+    observer.observe(el);
+  });
+
+  // Steps staggered
+  document.querySelectorAll('.paso').forEach((el, i) => {
+    const stepObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          setTimeout(() => {
+            e.target.style.animation = `izqFade 0.5s ease forwards`;
+          }, i * 120);
+          stepObs.unobserve(e.target);
+        }
+      });
+    }, opts);
+    stepObs.observe(el);
+  });
+
+  // Other sections
+  ['avReembolso','cajaFinal','pie'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const o = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.animation = `subirFade 0.6s ease forwards`;
+          o.unobserve(e.target);
+        }
+      });
+    }, opts);
+    o.observe(el);
+  });
+</script>
+
+</body>
+</html>
